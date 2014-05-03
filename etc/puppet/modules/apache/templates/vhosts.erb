@@ -1,0 +1,25 @@
+
+<VirtualHost *:<%= @port -%>>
+
+    AssignUserId <%= "#{@uid} #{@gid}" %>
+    ServerName   <%= @serverName %>
+    <%- if @serverAlias != '' -%>
+    <%- if @serverAlias.is_a? (Array) %><%- @serverAlias.each do |siteAlias| -%>
+    ServerAlias  <%= siteAlias %>
+    <%- end -%><%- else -%>
+    ServerAlias  <%= @serverAlias %>
+    <%- end -%><%- end -%>
+    ServerAdmin  <%= @serverAdmin %>
+    DocumentRoot <%= @docroot -%>/pub
+
+    <Directory  "<%= @docroot -%>/pub">
+        Options <%= @options %>
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    </Directory>
+
+    ErrorLog  <%= @docroot -%>/log/error.log
+    CustomLog <%= @docroot -%>/log/access.log combined
+
+</VirtualHost>
