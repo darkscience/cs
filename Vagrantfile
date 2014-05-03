@@ -14,4 +14,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ["modifyvm", :id, "--memory", "1024"]
   end
 
+  config.vm.provision :puppet do |puppet|
+    #puppet.options           = "--verbose --debug"
+    puppet.hiera_config_path = "etc/puppet/hiera.yml"
+    puppet.manifest_file     = "site.pp"
+    puppet.manifests_path    = "etc/puppet/manifests"
+    puppet.module_path       = "etc/puppet/modules"
+    puppet.working_directory = "/vagrant"
+  end
+
 end
