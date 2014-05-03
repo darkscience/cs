@@ -4,6 +4,7 @@ class bootstrap ( $host         = "",
                   $domain       = "", 
                   $nameservers  = "", 
                   $alt_hosts    = "", 
+                  $alt_doms     = "",
                   $resolvTemp   = "", 
                   $hostsTemp    = "",
                   $is_virtual   = 'true' ) {
