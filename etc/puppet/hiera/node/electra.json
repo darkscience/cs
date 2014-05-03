@@ -4,16 +4,57 @@
     "bootstrap::host"        : "electra",
     "bootstrap::domain"      : "cybershade.org",
     "bootstrap::nameservers" : [ "8.8.8.8", "4.2.2.2" ],
-    "bootstrap::alt_hosts"   : [ "electra", "lectra"  ],
-    "bootstrap::alt_doms"    : [ "cysha.co.uk", "phoenixcms.org" ],
+    "bootstrap::alt_hosts"   : [ "ellie", "lectra"  ],
+    "bootstrap::alt_doms"    : [ "cysha.co.uk", "phoenixcms.org", "lolcathost" ],
     "bootstrap::resolvTemp"  : "/vagrant/etc/puppet/modules/bootstrap/templates/resolv.conf.erb",
     "bootstrap::hostsTemp"   : "/vagrant/etc/puppet/modules/bootstrap/templates/hosts.erb",
 
-    /** Apache **/
+    /** Apache Base **/
     "apache::admin"          : "scub@darchoods.net",
-    "apache::base_root"      : "/usr/local/www/base/",
-    "apache::base_uid"       : "www-data",
-    "apache::base_gid"       : "www-data",
-    "apache::base_options"   : "-Indexes -MultiViews -FollowSymLinks"
+    "apache::serverName"     : "lolcathost",
+    "apache::docroot"        : "/usr/local/www/base",
+    "apache::uid"            : "www-data",
+    "apache::gid"            : "www-data",
+    "apache::options"        : "-Indexes -MultiViews -FollowSymLinks",
+    "apache::vhostTemp"      : "/vagrant/etc/puppet/modules/apache/templates/vhosts.erb",
+    "apache::indexTemp"      : "/vagrant/etc/puppet/modules/apache/templates/index.erb",
+    "apache::port"           : "80",
+
+    /** Auxiliary Sites **/
+    "apache_vhosts": {
+        /** Cysha.co.uk **/
+        "cysha.co.uk": {
+            "serverAdmin"    : "xlink@cybershade.org",
+            "serverName"     : "cysha.co.uk",
+            "serverAlias"    : [ "www.cysha.co.uk", "electra.cysha.co.uk" ],
+            "docroot"        : "/usr/local/www/cysha.co.uk",
+            "uid"            : "cysha",
+            "gid"            : "cysha",
+            "options"        : "-Indexes -MultiViews -FollowSymLinks",
+            "vhostTemp"      : "/vagrant/etc/puppet/modules/apache/templates/vhosts.erb",
+            "indexTemp"      : "/vagrant/etc/puppet/modules/apache/templates/testIndex.erb",
+            "port"           : "80",
+            "priority"       : "100",
+            "ssl"            : false,
+            "enabled"        : true 
+        },
+
+        /** Phoenixcms.org **/
+        "phoenixcms.org": {
+            "serverAdmin"    : "xlink@cybershade.org", 
+            "serverName"     : "phoenixcms.org",
+            "serverAlias"    : [ "www.phoenixcms.org", "electra.phoenixcms.org" ],
+            "docroot"        : "/usr/local/www/phoenixcms.org",
+            "uid"            : "phoenix",
+            "gid"            : "phoenix",
+            "options"        : "-Indexes -MultiViews -FollowSymLinks",
+            "vhostTemp"      : "/vagrant/etc/puppet/modules/apache/templates/vhosts.erb",
+            "indexTemp"      : "/vagrant/etc/puppet/modules/apache/templates/testIndex.erb",
+            "port"           : "80",
+            "priority"       : "100",
+            "ssl"            : false,
+            "enabled"        : true 
+        }
+    }
 
 }
