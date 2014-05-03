@@ -7,12 +7,13 @@
     "bootstrap::alt_hosts"   : [ "electra", "lectra"  ],
     "bootstrap::alt_doms"    : [ "cysha.co.uk", "phoenixcms.org" ],
     "bootstrap::resolvTemp"  : "/vagrant/etc/puppet/modules/bootstrap/templates/resolv.conf.erb",
-    "bootstrap::hostsTemp"   : "/vagrant/etc/puppet/modules/bootstrap/templates/hosts.erb"
+    "bootstrap::hostsTemp"   : "/vagrant/etc/puppet/modules/bootstrap/templates/hosts.erb",
 
-    /** Setup ElasticSearch **/
-    /** Setup Logstash      **/
-    /** Setup Kibana        **/
-    /** Setup Nginx         **/
-    /** Setup Firewall      **/
+    /** Apache **/
+    "apache::admin"          : "scub@darchoods.net",
+    "apache::base_root"      : "/usr/local/www/base/",
+    "apache::base_uid"       : "www-data",
+    "apache::base_gid"       : "www-data",
+    "apache::base_options"   : "-Indexes -MultiViews -FollowSymLinks"
 
 }
