@@ -1,0 +1,21 @@
+#
+#   persistent
+#   daemon_opts
+#   listen_addr
+#   listen_port
+#
+#
+#   BEANSTALKD_LISTEN_ADDR=0.0.0.0
+#   BEANSTALKD_LISTEN_PORT=11300
+#   DAEMON_OPTS="-l $BEANSTALKD_LISTEN_ADDR -p $BEANSTALKD_LISTEN_PORT"
+#
+#   #START=yes
+
+
+BEANSTALKD_LISTEN_ADDR=<%= @listen_addr %>
+BEANSTALKD_LISTEN_PORT=<%= @listen_port %>
+DAEMON_USER="<%= @daemon_user -%>"
+DAEMON_OPTS="<%= @daemon_opts -%>"
+
+## Uncomment to enable startup during boot.
+START=<%= @persistent %>
