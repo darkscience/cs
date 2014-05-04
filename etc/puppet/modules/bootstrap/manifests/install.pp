@@ -10,16 +10,15 @@ class bootstrap::install {
         #    creates => "/etc/puppet/modules/nginx",
         #    require => Exec[ 'SetHostname' ];
 
-        'Puppetlabs-Mysql':
-            command => "puppet module install puppetlabs-mysql --modulepath /etc/puppet/modules",
-            creates => "/etc/puppet/modules/mysql";
-
         # Flush Stale Caches (Takes forever)
         'Flush Apt-Cache':
-            command => $bootstrap::params::flushRepos, 
-            timeout => 1800,
-            require => Exec[ 'Puppetlabs-Mysql' ];
+            command => "$bootstrap::params::flushRepos", 
+            timeout => 1800;
 
+        'Puppetlabs-Mysql':
+            command => "puppet module install puppetlabs-mysql --modulepath /etc/puppet/modules",
+            creates => "/etc/puppet/modules/mysql",
+            require => Exec[ "Flush Apt-Cache" ];
     }
 
     # Base Packages
@@ -54,6 +53,7 @@ class bootstrap::install {
                 name    => 'virtualbox-guest-utils',
                 require => Package[ 'TZDATA' ];
         }
+
     }
 
 }
