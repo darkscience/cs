@@ -34,9 +34,9 @@ define apache::vhost( $serverName  = "",
 
     user {
         "$uid":
-            ensure => present,
-            home   => $docroot,
-            shell  => "/bin/bash"; 
+            ensure  => present,
+            home    => $docroot,
+            shell   => "/bin/bash", 
     }
 
     group {
@@ -88,8 +88,8 @@ define apache::vhost( $serverName  = "",
         file { "Enable $serverName":
             ensure => link,
             target => "$apache::params::conf_path/sites-available/$title",
-            path   => "$apache::params::conf_path/sites-enabled/$priority-$title",
-            notify => Class[ "apache::service" ];
+            path   => "$apache::params::conf_path/sites-enabled/$priority-$title";
+            #notify => Class[ "apache::service" ];
         }
 
     }
