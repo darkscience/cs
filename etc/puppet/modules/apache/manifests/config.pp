@@ -26,12 +26,29 @@ class apache::config {
 
     } 
 
+    file {
+
+        "Default ServerName":
+            ensure  => present,
+            path    => "$apache::params::conf_path/conf.d/ServerName",
+            mode    => 0640,
+            content => "ServerName lolcathost", 
+            require => Exec[ "Fix Open Config Permissions" ];
+
+        "Apache $apache::params::webroot":
+            ensure  => directory,
+            path    => "$apache::params::webroot",
+            mode    => 0701,
+            require => File[ "Default ServerName" ];
+
+    }
+
     apache::vhost {
         "default": 
             serverAdmin     => $apache::admin, 
             serverName      => $apache::serverName,
             serverAlias     => "${::hostname}.${apache::serverName}",
-            docroot         => $apache::docroot,
+            docroot         => "$apache::docroot",
             uid             => $apache::uid,
             gid             => $apache::gid,
             options         => $apache::options, 
@@ -40,18 +57,8 @@ class apache::config {
             port            => "80",
             priority        => "000",
             ssl             => false,
-            enabled         => true
-    }
-
-    file {
-
-        "Default ServerName":
-            ensure  => present,
-            path    => "$apache::params::conf_path/conf.d/ServerName",
-            mode    => 0640,
-            content => "ServerName lolcathost", 
-            require => Apache::Vhost[ "default" ],
-            notify  => Class[ "apache::service" ];
+            enabled         => true,
+            require         => File[ "Apache $apache::params::webroot" ];
     }
 
 }
