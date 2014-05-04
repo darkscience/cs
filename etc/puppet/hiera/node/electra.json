@@ -1,6 +1,8 @@
 {
 
-    /** Bootstrap **/
+    /**
+     * Bootstrap 
+     ************/
     "bootstrap::host"        : "electra",
     "bootstrap::domain"      : "cybershade.org",
     "bootstrap::nameservers" : [ "8.8.8.8", "4.2.2.2" ],
@@ -9,7 +11,9 @@
     "bootstrap::resolvTemp"  : "/vagrant/etc/puppet/modules/bootstrap/templates/resolv.conf.erb",
     "bootstrap::hostsTemp"   : "/vagrant/etc/puppet/modules/bootstrap/templates/hosts.erb",
 
-    /** Apache Base **/
+    /** 
+     * Apache Base
+     **************/
     "apache::admin"          : "scub@darchoods.net",
     "apache::serverName"     : "lolcathost",
     "apache::docroot"        : "/usr/local/www/base",
@@ -20,9 +24,38 @@
     "apache::indexTemp"      : "/vagrant/etc/puppet/modules/apache/templates/index.erb",
     "apache::port"           : "80",
 
-    /** Auxiliary Sites **/
+    /**** 
+     * PHP5 
+     *******/
+    "php::max_execution_time" : "30",
+    "php::max_input_time"     : "30",
+    "php::memory_limit"       : "128M",
+    "php::display_errors"     : "Off",
+    "php::log_errors"         : "On",
+    "php::error_log"          : "syslog",
+    "php::file_uploads"       : "On",
+    "php::error_reporting"    : "E_COMPILE_ERROR|E_RECOVERABLE_ERROR|E_ERROR|E_CORE_ERROR",
+    "php::with_composer"      : true,
+
+
+    /****
+     * Beanstalkd
+     *************/
+    "beanstalk::persistent"  : "yes",
+    "beanstalk::listen_addr" : "127.0.0.1", 
+    "beanstalk::listen_port" : "11300",
+    "beanstalk::daemon_user" : "beanstalk",
+    "beanstalk::daemon_opts" : "-l $BEANSTALKD_LISTEN_ADDR -p $BEANSTALKD_LISTEN_PORT", /* -u $DAEMON_USER", */
+    "beanstalk::template"    : "/vagrant/etc/puppet/modules/beanstalk/templates/beanstalkd.erb",
+
+
+    /**
+     * Local Site Data
+     ******************/
     "apache_vhosts": {
-        /** Cysha.co.uk **/
+        /** 
+         * Cysha.co.uk 
+         **************/
         "cysha.co.uk": {
             "serverAdmin"    : "xlink@cybershade.org",
             "serverName"     : "cysha.co.uk",
@@ -39,7 +72,9 @@
             "enabled"        : true 
         },
 
-        /** Phoenixcms.org **/
+        /** 
+         * Phoenixcms.org 
+         *****************/
         "phoenixcms.org": {
             "serverAdmin"    : "xlink@cybershade.org", 
             "serverName"     : "phoenixcms.org",
@@ -50,6 +85,7 @@
             "options"        : "-Indexes -MultiViews -FollowSymLinks",
             "vhostTemp"      : "/vagrant/etc/puppet/modules/apache/templates/vhosts.erb",
             "indexTemp"      : "/vagrant/etc/puppet/modules/apache/templates/testIndex.erb",
+
             "port"           : "80",
             "priority"       : "100",
             "ssl"            : false,
