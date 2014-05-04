@@ -9,6 +9,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = "electra.cybershade.org"
   config.vm.network :forwarded_port, guest: 80, host: 8080
   
+  # Auto Update
+  config.vm.box_check_update = true
+
   # 1Gb Ram
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", "1024"]
