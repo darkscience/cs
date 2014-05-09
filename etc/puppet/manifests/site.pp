@@ -10,13 +10,16 @@ node /^electra$|^andromeda$|^romy$/ {
     $local_sites = hiera( 'apache_vhosts', [] ) 
 
     class { 
-
         "bootstrap": 
             stage  => 'pre',
-            before => Class[ "apache"     ];
+            before => Class[ "openssh"    ];
+
+        "openssh":
+            stage   => 'pre', 
+            require => Class[ "bootstrap" ];
 
         "apache":
-            require => Class[ "bootstrap" ]; 
+            require => Class[ "openssh"   ]; 
 
         "php":
             require => Class[ "apache"    ];
