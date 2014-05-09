@@ -19,13 +19,19 @@ class bootstrap::install {
             command => "puppet module install puppetlabs-mysql --modulepath /etc/puppet/modules",
             creates => "/etc/puppet/modules/mysql",
             require => Exec[ "Flush Apt-Cache" ];
+
+        'Puppetlabs-Firewall':
+            command => "puppet module install puppetlabs-firewall --modulepath /etc/puppet/modules",
+            creates => "/etc/puppet/modules/firewall",
+            require => Exec[ "Puppetlabs-Mysql" ];
+        
     }
 
     # Base Packages
     package {
         'VIM':
             name    => $bootstrap::params::vim_pkg,
-            require => Exec[ 'Puppetlabs-Mysql' ];
+            require => Exec[ 'Puppetlabs-Firewall' ];
 
         'GIT':
             name    => $bootstrap::params::git_pkg, 
